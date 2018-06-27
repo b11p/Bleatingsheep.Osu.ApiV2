@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Bleatingsheep.Osu.ApiV2/Properties/PublishProfiles/FolderProfile.pubxml
