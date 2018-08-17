@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Bleatingsheep.Osu.ApiV2
+namespace Bleatingsheep.Osu.ApiV2.Models
 {
     public class UserV2
     {
