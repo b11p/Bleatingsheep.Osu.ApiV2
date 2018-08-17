@@ -4,8 +4,8 @@ namespace Bleatingsheep.Osu.ApiV2
 {
     internal class TokenInfo
     {
-        private readonly DateTime _outDate = DateTime.MinValue;
-        private readonly DateTime _preferDate = DateTime.MinValue;
+        private readonly DateTime _outDate;
+        private readonly DateTime _preferDate;
 
         public TokenInfo(string accessToken, DateTime outDate, DateTime preferDate)
         {
