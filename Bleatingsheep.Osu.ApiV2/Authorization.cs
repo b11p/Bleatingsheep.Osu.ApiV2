@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Bleatingsheep.Osu.ApiV2.Utils;
 using Newtonsoft.Json;
 
 namespace Bleatingsheep.Osu.ApiV2
@@ -30,36 +31,35 @@ namespace Bleatingsheep.Osu.ApiV2
                 TokenResponse tokenResponse;
 
                 // Get Token Response.
-                using (var httpClient = GetHttpClient())
+
+                var tokenInfo = new TokenRequest
                 {
-                    var tokenInfo = new TokenRequest
-                    {
-                        Username = _username,
-                        Password = _password,
-                    };
-                    var tokenRequestContent = new StringContent(JsonConvert.SerializeObject(tokenInfo), Encoding.UTF8, "application/json");
+                    Username = _username,
+                    Password = _password,
+                };
+                try
+                {
+                    HttpResponseMessage response =
+                        HttpClientUtil.HttpPost("https://osu.ppy.sh/oauth/token", tokenInfo);
                     try
                     {
-                        var response = httpClient.PostAsync("https://osu.ppy.sh/oauth/token", tokenRequestContent).Result;
-                        try
-                        {
-                            response.EnsureSuccessStatusCode();
-                        }
-                        catch (Exception)
-                        {
-                            return ApiStatus.AuthorizationFail;
-                        }
-                        if (!response.Content.Headers.ContentType.MediaType.Equals("application/json", StringComparison.OrdinalIgnoreCase))
-                        {
-                            return ApiStatus.AuthorizationFail;
-                        }
-                        responseText = response.Content.ReadAsStringAsync().Result;
+                        response.EnsureSuccessStatusCode();
                     }
                     catch (Exception)
                     {
-                        return ApiStatus.NetworkFail;
+                        return ApiStatus.AuthorizationFail;
                     }
+                    if (!response.Content.Headers.ContentType.MediaType.Equals("application/json", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return ApiStatus.AuthorizationFail;
+                    }
+                    responseText = response.Content.ReadAsStringAsync().Result;
                 }
+                catch (Exception)
+                {
+                    return ApiStatus.NetworkFail;
+                }
+
                 try
                 {
                     tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(responseText);
@@ -115,6 +115,7 @@ namespace Bleatingsheep.Osu.ApiV2
             }
             catch (Exception)
             {
+                // ignored
             }
         }
 
@@ -129,7 +130,5 @@ namespace Bleatingsheep.Osu.ApiV2
         }
 
         public async Task<(ApiStatus, string)> GetAccessTokenAsync() => await Task.Run(() => GetAccessToken());
-
-        private static HttpClient GetHttpClient() => new HttpClient();
     }
 }

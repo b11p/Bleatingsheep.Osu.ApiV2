@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Bleatingsheep.Osu.ApiV2.Models;
+using Bleatingsheep.Osu.ApiV2.Utils;
 using Newtonsoft.Json;
 
 namespace Bleatingsheep.Osu.ApiV2
 {
     public class OsuApiV2Client
     {
-        public int Timeout { get; set; } = 8000;
         public OsuApiV2Client(string username, string password) => _auth = new Authorization(username, password);
 
         /// <summary>
@@ -38,9 +39,7 @@ namespace Bleatingsheep.Osu.ApiV2
 
         private async Task<T> GetAsync<T>(string url)
         {
-            var authorization = _auth;
-            string responseText;
-            var (status, accessToken) = await authorization.GetAccessTokenAsync();
+            var (status, accessToken) = await _auth.GetAccessTokenAsync();
 
             switch (status)
             {
@@ -54,34 +53,33 @@ namespace Bleatingsheep.Osu.ApiV2
                     throw new BadDataException("Received Data is invalid.");
             }
 
-            using (var httpClient = new HttpClient())
+            HttpResponseMessage response;
+            try
             {
-                httpClient.Timeout = new TimeSpan(0, 0, 0, 0, Timeout);
-                var message = new HttpRequestMessage(HttpMethod.Get, url);
-                message.Headers.Add("Authorization", "Bearer " + accessToken);
-                HttpResponseMessage response;
-                try
+                response = HttpClientUtil.HttpGet(url, null, new Dictionary<string, string>
                 {
-                    response = await httpClient.SendAsync(message);
-                    response = response.EnsureSuccessStatusCode();
-                }
-                catch (TaskCanceledException)
-                {
-                    throw new NetworkFailException($"The request is timed out. ({Timeout}ms)");
-                }
-                catch (Exception e)
-                {
-                    throw new NetworkFailException("Network error.", e);
-                }
-
-                if (!response.Content.Headers.ContentType.MediaType.Equals("application/json",
-                    StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new NotFoundException("Can not find specific data.");
-                }
-
-                responseText = await response.Content.ReadAsStringAsync();
+                    {"Authorization", "Bearer " + accessToken}
+                });
+                if (response == null)
+                    throw new NetworkFailException();
+                response = response.EnsureSuccessStatusCode();
             }
+            catch (TaskCanceledException)
+            {
+                throw new NetworkFailException($"Request timed out. ({HttpClientUtil.Timeout}ms)");
+            }
+            catch (Exception e)
+            {
+                throw new NetworkFailException("Network error.", e);
+            }
+
+            if (!response.Content.Headers.ContentType.MediaType.Equals("application/json",
+                StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotFoundException("Can not find specific data.");
+            }
+
+            string responseText = await response.Content.ReadAsStringAsync();
 
             try
             {
