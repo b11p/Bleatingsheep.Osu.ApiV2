@@ -17,7 +17,7 @@ namespace Bleatingsheep.Osu.ApiV2
         {
             string result = BaseUrl + $"users/{osuId}";
             string modeString = mode?.ModeString();
-            if (modeString is string)
+            if (modeString != null)
             {
                 result += "/" + modeString;
             }
