@@ -10,7 +10,7 @@ namespace Bleatingsheep.Osu.ApiV2
     {
         private readonly string _username;
         private readonly string _password;
-        private TokenInfo _tokenInfo = TokenInfo.Default();
+        private TokenInfo _tokenInfo = TokenInfo.Default;
         private readonly object _refreshLock = new object();
 
         public Authorization(string username, string password)
@@ -90,7 +90,7 @@ namespace Bleatingsheep.Osu.ApiV2
 
         private ApiStatus EnsureValid(ref TokenInfo tokenInfo)
         {
-            if (!tokenInfo.IsValid())
+            if (!tokenInfo.IsValid)
             {
                 var status = Refresh(tokenInfo);
                 if (status != ApiStatus.Success) return status;
@@ -107,7 +107,7 @@ namespace Bleatingsheep.Osu.ApiV2
                 await Task.Run(() =>
                 {
                     var tokenInfo = _tokenInfo;
-                    if (!tokenInfo.IsPreferred())
+                    if (!tokenInfo.IsPreferred)
                     {
                         Refresh(tokenInfo);
                     }

@@ -16,10 +16,10 @@ namespace Bleatingsheep.Osu.ApiV2
 
         public string AccessToken { get; }
 
-        public static TokenInfo Default() => new TokenInfo(string.Empty, DateTime.MinValue, DateTime.MinValue);
+        public static TokenInfo Default => new TokenInfo(string.Empty, DateTime.MinValue, DateTime.MinValue);
 
-        public bool IsPreferred() => DateTime.UtcNow < _preferDate;
+        public bool IsPreferred => DateTime.UtcNow < _preferDate;
 
-        public bool IsValid() => DateTime.UtcNow < _outDate;
+        public bool IsValid => DateTime.UtcNow < _outDate;
     }
 }
