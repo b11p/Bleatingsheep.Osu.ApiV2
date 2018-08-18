@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Bleatingsheep.Osu.ApiV2.Models;
-using Bleatingsheep.Osu.ApiV2.Utils;
+using Bleatingsheep.Osu.ApiV2b.Models;
+using Bleatingsheep.Osu.ApiV2b.Utils;
 using Newtonsoft.Json;
 
-namespace Bleatingsheep.Osu.ApiV2
+namespace Bleatingsheep.Osu.ApiV2b
 {
     public class OsuApiV2Client
     {

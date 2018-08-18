@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
-namespace Bleatingsheep.Osu.ApiV2.Utils
+namespace Bleatingsheep.Osu.ApiV2b.Utils
 {
     public static class StringUtils
     {

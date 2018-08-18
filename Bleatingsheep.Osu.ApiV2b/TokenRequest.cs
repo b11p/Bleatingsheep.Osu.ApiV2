@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Bleatingsheep.Osu.ApiV2
+namespace Bleatingsheep.Osu.ApiV2b
 {
     internal class TokenRequest
     {

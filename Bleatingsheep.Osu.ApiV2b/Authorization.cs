@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Bleatingsheep.Osu.ApiV2.Utils;
+using Bleatingsheep.Osu.ApiV2b.Utils;
 using Newtonsoft.Json;
 
-namespace Bleatingsheep.Osu.ApiV2
+namespace Bleatingsheep.Osu.ApiV2b
 {
     internal class Authorization
     {

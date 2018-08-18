@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Bleatingsheep.Osu.ApiV2
+namespace Bleatingsheep.Osu.ApiV2b
 {
     public class NotFoundException : ApplicationException
     {

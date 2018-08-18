@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 
-namespace Bleatingsheep.Osu.ApiV2.Models
+namespace Bleatingsheep.Osu.ApiV2b.Models
 {
     public class Beatmaps
     {

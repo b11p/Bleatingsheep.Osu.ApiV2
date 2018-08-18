@@ -1,4 +1,4 @@
-﻿namespace Bleatingsheep.Osu.ApiV2
+﻿namespace Bleatingsheep.Osu.ApiV2b
 {
     public enum Mode
     {

@@ -5,11 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace Bleatingsheep.Osu.ApiV2.Utils
+namespace Bleatingsheep.Osu.ApiV2b.Utils
 {
     public static class HttpClientUtil
     {
