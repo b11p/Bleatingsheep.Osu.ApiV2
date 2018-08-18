@@ -11,9 +11,9 @@ namespace Bleatingsheep.Osu.ApiV2b.Models
         [JsonProperty(PropertyName = "play_count")] public int PlayCount { get; set; }
         [JsonProperty(PropertyName = "favourite_count")] public int FavouriteCount { get; set; }
         [JsonProperty(PropertyName = "has_favourited")] public bool HasFavourited { get; set; }
-        [JsonProperty(PropertyName = "submitted_date")] public DateTime SubmittedDate { get; set; }
-        [JsonProperty(PropertyName = "last_updated")] public DateTime LastUpdated { get; set; }
-        [JsonProperty(PropertyName = "ranked_date")] public DateTime RankedDate { get; set; }
+        [JsonProperty(PropertyName = "submitted_date")] public DateTime? SubmittedDate { get; set; }
+        [JsonProperty(PropertyName = "last_updated")] public DateTime? LastUpdated { get; set; }
+        [JsonProperty(PropertyName = "ranked_date")] public DateTime? RankedDate { get; set; }
         [JsonProperty(PropertyName = "creator")] public string Creator { get; set; }
         [JsonProperty(PropertyName = "user_id")] public long UserId { get; set; }
         [JsonProperty(PropertyName = "bpm")] public double Bpm { get; set; }
