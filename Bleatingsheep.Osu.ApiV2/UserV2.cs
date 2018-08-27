@@ -40,7 +40,8 @@ namespace Bleatingsheep.Osu.ApiV2
         public int max_blocks { get; set; }
         public int max_friends { get; set; }
         public object[] account_history { get; set; }
-        public object[] active_tournament_banner { get; set; }
+        // see ActiveTournamentBanner
+        public object active_tournament_banner { get; set; }
         public Badge[] badges { get; set; }
         public int[] favourite_beatmapset_count { get; set; }
         public int[] follower_count { get; set; }
@@ -56,6 +57,13 @@ namespace Bleatingsheep.Osu.ApiV2
         public int[] unranked_beatmapset_count { get; set; }
         public UserAchievements[] user_achievements { get; set; }
         public RankHistory rankHistory { get; set; }
+    }
+
+    public class ActiveTournamentBanner
+    {
+        public int id { get; set; }
+        public int tournament_id { get; set; }
+        public string image { get; set; }
     }
 
     public class Badge
