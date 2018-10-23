@@ -19,11 +19,17 @@ namespace Bleatingsheep.Osu.ApiV2b
 
         public async Task<UserV2> GetUserAsync(int osuId, Mode mode) => await GetAsync<UserV2>(UserUrl(osuId, mode));
 
-        public async Task<Beatmapsets[]> SearchBeatMapAsync(string keyword) =>
-            await GetAsync<Beatmapsets[]>(BeatmapsetsUrl(keyword, null));
-        public async Task<Beatmapsets[]> SearchBeatMapAsync(string keyword, BeatmapsetsSearchOptions options) =>
-            await GetAsync<Beatmapsets[]>(BeatmapsetsUrl(keyword, options));
-
+        public async Task<BeatmapsetModel> SearchBeatMapAsync(string keyword) =>
+            await GetAsync<BeatmapsetModel>(BeatmapsetsSearchUrl(keyword, null));
+        public async Task<BeatmapsetModel> SearchBeatMapAsync(string keyword, BeatmapsetsSearchOptions options) =>
+            await GetAsync<BeatmapsetModel>(BeatmapsetsSearchUrl(keyword, options));
+        public async Task<Beatmapset> GetBeatmapsetBySIdAsync(string setId) =>
+            await GetAsync<Beatmapset>(BeatmapsetsIdUrl(setId));
+        public async Task<Beatmapset> GetBeatmapsetByBIdAsync(string bId)
+        {
+            Beatmaps beatmap = await GetAsync<Beatmaps>(BeatmapIdUrl(bId));
+            return await GetBeatmapsetBySIdAsync(beatmap.BeatmapsetId.ToString());
+        }
 
         #region private members
 
@@ -43,7 +49,19 @@ namespace Bleatingsheep.Osu.ApiV2b
             return result;
         }
 
-        private static string BeatmapsetsUrl(string keyword, BeatmapsetsSearchOptions options)
+        private static string BeatmapIdUrl(string bId)
+        {
+            const string beatmapUrl = BaseUrl + "beatmaps";
+            return $"{beatmapUrl}/{bId}";
+        }
+
+        private static string BeatmapsetsIdUrl(string sId)
+        {
+            const string setsUrl = BaseUrl + "beatmapsets";
+            return $"{setsUrl}/{sId}";
+        }
+
+        private static string BeatmapsetsSearchUrl(string keyword, BeatmapsetsSearchOptions options)
         {
             var paramDic = new Dictionary<string, string> { { "q", keyword } };
             if (options != null) AddParams(options, paramDic);

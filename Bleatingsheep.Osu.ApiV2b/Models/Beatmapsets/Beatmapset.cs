@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Bleatingsheep.Osu.ApiV2b.Models
 {
-    public class Beatmapsets
+    public class Beatmapset
     {
         [JsonProperty(PropertyName = "id")] public string Id { get; set; }
         [JsonProperty(PropertyName = "title")] public string Title { get; set; }
